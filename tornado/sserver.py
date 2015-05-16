@@ -1,0 +1,31 @@
+import os
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+import daemon
+
+from tornado.options import define, options
+define("port", default=8000, help="run on the given port", type=int)
+
+
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        greeting = self.get_argument('greeting', 'Hello')
+        self.write(greeting + ', friendly user!')
+
+with daemon.DaemonContext():
+    settings = dict(
+        "certfile": os.path.join("/geico/geico/cert/cert.pem"),
+        "keyfile": os.path.join("/geico/geico/cert/key.pem"),
+    )
+
+    def main():
+        tornado.options.parse_command_line()
+        app = tornado.web.Application(handlers=[(r"/", IndexHandler)])
+        http_server = tornado.httpserver.HTTPServer(app)
+        http_server.listen(options.port)
+        tornado.ioloop.IOLoop.instance().start()
+
+
+

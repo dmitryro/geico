@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://facade.expertvendorresponse.claims.geico.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+      <ns0:Body>
+            <ns1:vendorResponseForTestimony>
+                     <arg0>
+                           <claimsApplicationContext>
+                                 <clientApplicationMachineName>${clientappmachname}</clientApplicationMachineName>
+                                 <clientApplicationName>${clientappname}</clientApplicationName>
+                                 <clientApplicationOS>${clientappos}</clientApplicationOS>
+                                 <clientSessionID>${sessionid}</clientSessionID>
+                                 <echoField>${echofield}</echoField>
+                                 <userID>${userid}</userID>
+                                 <userRegion>${userregion}</userRegion>
+                           </claimsApplicationContext>
+                           <vendorResponseForTestimonyRequestDto>
+                                 <invoiceNumber>${invoincenumber}</invoiceNumber>
+                                 <isBooked>${isbooked}</isBooked>
+                                 <isOriginalDoctorAvailable>${isoriginalavailable}</isOriginalDoctorAvailable>
+                                 <vendorResponseCreateDateTime>${datetime} ${hour}-${minute}-${second}</vendorResponseCreateDateTime>
+                                 <reason>${reason}</reason>
+                                 <substituteDoctor>${substituteDoctor}</substituteDoctor>
+                                 <substituteDoctorID>${substituteDoctorID}</substituteDoctorID>
+                           </vendorResponseForTestimonyRequestDto>
+                     </arg0>
+            </ns1:vendorResponseForTestimony>
+     </ns0:Body>
+</SOAP-ENV:Envelope>

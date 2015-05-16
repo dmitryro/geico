@@ -1,0 +1,74 @@
+    var sys = require("sys"),  
+    gc_http = require("http"); // required for http connection      
+    var moment = require("moment"); // reuqired for timestamp
+    var url = require('url');     // required for url processing
+    var mysql = require('mysql'); // required for mysql logging
+    var soap  = require('soap'); // soap connection library
+    var fs = require('fs');      // file system utils
+    var xml = fs.readFileSync('./soap/signetics.wsdl', 'utf8');
+   // initiate the connection
+    var conn = mysql.createConnection({
+       host     : 'localhost',
+       user     : 'root',
+       password : 'root',
+       database : 'geicodb'
+    });
+
+    // web service description
+    var SoapService = {
+       'ScheduleExpertService': {
+
+           cancelExpertForTestimony: {
+           }
+
+       }
+    }
+
+    // create the server 
+    var server = gc_http.createServer(function(request,response){  
+        sys.puts("I got kicked");  
+        var date_now = moment().format('MMMM Do YYYY, h:mm:ss a');
+        var id = url.parse(decodeURI(request.url), true).query.id;
+
+
+        if( id === undefined )
+           id = 0;
+
+        if( id === null )
+           id = 0;
+
+        var record = 'connected';
+        // set the query and the values
+        var sql = "INSERT INTO access_log (client_id,log_status,timestamp) VALUES ?";
+        var values = [
+            [id,'connected',date_now]
+        ];
+
+        conn.query(sql, [values], function(err) {
+    
+           if (err) { // report an error if any
+               record = 'error';
+               throw err;
+           }
+           conn.end();
+        });
+
+        response.writeHeader(200, {"Content-Type": "text/plain"});
+        response.write("{'response':service poked,'date':"+date_now+",'id':"+id+",'db':"+record+"}");  
+        response.end();  
+    }).listen(80);  
+
+
+    // make the web service avaiable
+    soap.listen(server, '/wsdl', SoapService, xml);
+    
+    sys.puts("Server Running on 80");   
+
+    process.on('SIGTERM', function () {
+      if (server === undefined) return;
+
+       server.close(function () {
+    // Disconnect from cluster master
+           process.disconnect && process.disconnect();
+       });
+    });
