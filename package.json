@@ -1,0 +1,31 @@
+{
+  "name": "geico",
+  "version": "0.0.1",
+  "description": "Geico Service",
+  "main": "lib/app.js",
+  "repository": {
+    "url": "http://github.com/dmitryro/geico/issues",
+    "email": "dmitryro@gmail.com"
+  },
+
+  "scripts": {
+    "test": "test it",
+    "start": "node server.js"
+  },
+
+  "dependencies": {
+    "daemon": "~1.1.0",
+    "mysql" : "*",
+    "better-js-class": "*",
+    "cps": "*",
+    "request":"*", 
+    "moment": "~2.5.0",
+    "soap": "0.3.2",
+    "soap-server": "*",
+    "underscore": "*",
+    "node-mysql": "*"
+  },
+
+  "author": "Dmitry Roitman",
+  "license": "BSD"
+}
