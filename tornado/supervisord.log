@@ -1,3 +1,0 @@
-2014-02-01 11:59:31,463 CRIT Supervisor running as root (no user in config file)
-2014-02-01 11:59:31,464 INFO daemonizing the supervisord process
-2014-02-01 11:59:31,465 INFO supervisord started with pid 21234
